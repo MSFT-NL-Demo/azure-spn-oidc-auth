@@ -1,0 +1,21 @@
+name: OIDC-Demo
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  oidc:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@main
+
+      - uses: azure/login@v1
+        name: OIDC Login to Management Group
+        with:         
+          tenant-id: ${{ secrets.TENANT_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
